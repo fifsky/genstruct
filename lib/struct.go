@@ -5,6 +5,7 @@ import (
 	"text/template"
 	"os"
 	"github.com/ilibs/gosql"
+	"os/exec"
 )
 
 type Attr struct {
@@ -21,9 +22,16 @@ type TableInfo struct {
 	StructName string
 	Database   string
 	PrimaryKey string
+	ExistTime  bool
 }
 
 var tmplContent = `
+package {{ .TableName }}
+{{ if .ExistTime }}
+import (
+	"time"
+)
+{{end}}
 type {{ .StructName }} struct {
     {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `json:"{{ .Field }}" db:"{{ .Field }}"` + "\u0060{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
 }
@@ -62,13 +70,19 @@ func ShowStruct(cmd string) error {
 		Database:   databaseName,
 	}
 
+	var existTime = false
 	for _, v := range datas {
 		m := mapToString(v)
+		tp := typeFormat(m["Type"])
+
+		if tp == "time.Time" {
+			existTime = true
+		}
 
 		attr := &Attr{
 			StructField: titleCasedName(m["Field"]),
 			Field:       m["Field"],
-			Type:        typeFormat(m["Type"]),
+			Type:        tp,
 			Comment:     m["Comment"],
 		}
 
@@ -78,17 +92,33 @@ func ShowStruct(cmd string) error {
 		}
 	}
 
+	info.ExistTime = existTime
+
 	info.Len = len(info.Columns) - 1
 
 	tmpl, err := template.New("struct").Parse(tmplContent)
 	if err != nil {
 		return err
 	}
-	err = tmpl.Execute(os.Stdout, info)
+
+	tmpFile := "/tmp/genstruct"
+
+	f, err := os.OpenFile(tmpFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		return err
+	}
+
+	defer f.Close()
+	err = tmpl.Execute(f, info)
+
+	c := exec.Command("gofmt", "-s", tmpFile)
+	c.Dir = "/tmp"
+	out, err := c.CombinedOutput()
 
 	if err != nil {
 		return err
 	}
 
+	fmt.Println(string(out))
 	return nil
 }

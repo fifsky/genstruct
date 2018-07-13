@@ -80,6 +80,9 @@ func main() {
 				if err != nil {
 					return err
 				}
+			case "exit":
+				fmt.Println("Bye!")
+				os.Exit(0)
 			default:
 				start := time.Now()
 				datas, err := lib.Exec(line)
