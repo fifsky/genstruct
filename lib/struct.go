@@ -19,6 +19,7 @@ type TableInfo struct {
 	Columns    []*Attr
 	Len        int
 	TableName  string
+	ShortName  string
 	StructName string
 	Database   string
 	PrimaryKey string
@@ -36,16 +37,16 @@ type {{ .StructName }} struct {
     {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `json:"{{ .Field }}" db:"{{ .Field }}"` + "\u0060{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
 }
 
-func (this *{{ .StructName }}) DbName() string {
-    return {{ .Database }}
+func ({{ .ShortName }} *{{ .StructName }}) DbName() string {
+    return "{{ .Database }}"
 }
 
-func (this *{{ .StructName }}) TableName() string {
-    return {{ .TableName }}
+func ({{ .ShortName }} *{{ .StructName }}) TableName() string {
+    return "{{ .TableName }}"
 }
 
-func (this *{{ .StructName }}) PK() string {
-    return {{ .PrimaryKey }}
+func ({{ .ShortName }} *{{ .StructName }}) PK() string {
+    return "{{ .PrimaryKey }}"
 }
 `
 
@@ -66,6 +67,7 @@ func ShowStruct(cmd string) error {
 	info := &TableInfo{
 		Columns:    make([]*Attr, 0),
 		TableName:  cmd,
+		ShortName:  cmd[0:1],
 		StructName: titleCasedName(cmd),
 		Database:   databaseName,
 	}
