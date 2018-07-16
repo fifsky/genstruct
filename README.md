@@ -15,9 +15,9 @@ go install github.com/fifsky/genstruct
 genstruct -h localhost -u root -p 3306 -P 123456
 ```
 
-`-h` default `localhost`
-`-u` default `root`
-`-p` default `3306`
+* `-h` default `localhost`
+* `-u` default `root`
+* `-p` default `3306`
 
 ## gosql
 
