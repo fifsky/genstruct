@@ -18,6 +18,7 @@ type Attr struct {
 type TableInfo struct {
 	Columns    []*Attr
 	Len        int
+	OtherTag   string
 	TableName  string
 	ShortName  string
 	StructName string
@@ -34,7 +35,7 @@ import (
 )
 {{end}}
 type {{ .StructName }} struct {
-    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `json:"{{ .Field }}" db:"{{ .Field }}"` + "\u0060{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
+    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `db:"{{ .Field }}" json:"{{ .Field }}"{{ if ne $.OtherTag "" }} form:"{{ .Field }}"{{ end }}` + "\u0060{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
 }
 
 func ({{ .ShortName }} *{{ .StructName }}) DbName() string {
@@ -50,7 +51,7 @@ func ({{ .ShortName }} *{{ .StructName }}) PK() string {
 }
 `
 
-func ShowStruct(cmd string) error {
+func ShowStruct(cmd string, tag string) error {
 	query := fmt.Sprintf("SHOW FULL COLUMNS FROM %s", cmd)
 	datas, err := Exec(query)
 	if err != nil {
@@ -65,6 +66,7 @@ func ShowStruct(cmd string) error {
 	}
 
 	info := &TableInfo{
+		OtherTag:   tag,
 		Columns:    make([]*Attr, 0),
 		TableName:  cmd,
 		ShortName:  cmd[0:1],

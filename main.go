@@ -8,6 +8,7 @@ import (
 	"time"
 	"strings"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/ilibs/gosql"
 	"github.com/fifsky/genstruct/lib"
 )
@@ -76,7 +77,10 @@ func main() {
 				if err != nil {
 					return err
 				}
-				err = lib.ShowStruct(cmd)
+
+				tag, _ := lib.GetParams(cmds, 2)
+
+				err = lib.ShowStruct(cmd,tag)
 				if err != nil {
 					return err
 				}
