@@ -60,7 +60,7 @@ func typeFormat(t string) string {
 		return "time.Time"
 	}
 
-	if t[0:6] == "bigint" {
+	if len(t) >= 6 && t[0:6] == "bigint" {
 		return "int64"
 	}
 
