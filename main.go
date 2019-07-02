@@ -1,15 +1,16 @@
 package main
 
 import (
-	"os"
-	"fmt"
-	"flag"
 	"bufio"
-	"time"
+	"flag"
+	"fmt"
+	"os"
 	"strings"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/ilibs/gosql"
+
 	"github.com/fifsky/genstruct/lib"
 )
 
@@ -80,7 +81,7 @@ func main() {
 
 				tag, _ := lib.GetParams(cmds, 2)
 
-				err = lib.ShowStruct(cmd,tag)
+				err = lib.ShowStruct(cmd, tag)
 				if err != nil {
 					return err
 				}

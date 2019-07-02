@@ -1,9 +1,9 @@
 package lib
 
 import (
-	"sort"
-	"fmt"
 	"errors"
+	"fmt"
+	"sort"
 	"strings"
 )
 

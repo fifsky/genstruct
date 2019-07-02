@@ -1,11 +1,12 @@
 package lib
 
 import (
+	"fmt"
+	"os"
 	"time"
+
 	"github.com/ilibs/gosql"
 	"github.com/olekukonko/tablewriter"
-	"os"
-	"fmt"
 )
 
 func Exec(query string) ([]map[string]interface{}, error) {

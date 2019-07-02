@@ -35,7 +35,7 @@ import (
 )
 {{end}}
 type {{ .StructName }} struct {
-    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `db:"{{ .Field }}" json:"{{ .Field }}"{{ if ne $.OtherTag "" }} form:"{{ .Field }}"{{ end }}` + "\u0060{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
+    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `db:"{{ .Field }}" json:"{{ .Field }}"{{ if ne $.OtherTag "" }} {{$.OtherTag}}:"{{ .Field }}"{{ end }}` + "\u0060 // {{.Comment}}{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
 }
 
 func ({{ .ShortName }} *{{ .StructName }}) DbName() string {

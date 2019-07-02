@@ -1,12 +1,14 @@
 package lib
 
 import (
-	"testing"
-	"github.com/ilibs/gosql"
 	"os"
+	"testing"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/ilibs/gosql"
 )
 
-func TestMain(m *testing.M)  {
+func TestMain(m *testing.M) {
 	configs := make(map[string]*gosql.Config)
 
 	dsn := os.Getenv("MYSQL_TEST_DSN")
