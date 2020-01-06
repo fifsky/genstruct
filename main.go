@@ -9,9 +9,9 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/ilibs/gosql"
+	"github.com/ilibs/gosql/v2"
 
-	"github.com/fifsky/genstruct/lib"
+	"github.com/fifsky/genstruct/generator"
 )
 
 var (
@@ -42,6 +42,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	gen := generator.NewGenerator(gosql.Use("default"))
+
 	input := bufio.NewScanner(os.Stdin)
 	fmt.Print("> ")
 	for input.Scan() {
@@ -63,7 +65,7 @@ func main() {
 
 			switch cmds[0] {
 			case "use":
-				cmd, err := lib.GetParams(cmds, 1)
+				cmd, err := generator.GetParams(cmds, 1)
 				if err != nil {
 					return err
 				}
@@ -74,27 +76,28 @@ func main() {
 				return err
 
 			case "g":
-				cmd, err := lib.GetParams(cmds, 1)
+				cmd, err := generator.GetParams(cmds, 1)
 				if err != nil {
 					return err
 				}
 
-				tag, _ := lib.GetParams(cmds, 2)
+				tag, _ := generator.GetParams(cmds, 2)
 
-				err = lib.ShowStruct(cmd, tag)
+				out, err := gen.ShowStruct(cmd, tag)
 				if err != nil {
 					return err
 				}
+				fmt.Println(string(out))
 			case "exit":
 				fmt.Println("Bye!")
 				os.Exit(0)
 			default:
 				start := time.Now()
-				datas, err := lib.Exec(line)
+				datas, err := gen.Exec(line)
 				if err != nil {
 					return err
 				}
-				lib.ShowTable(datas, start)
+				gen.ShowTable(datas, start)
 			}
 			return
 		}()
