@@ -19,7 +19,7 @@ export default () => {
   return (
     <div style={{ margin: '20px' }}>
       <Card
-        title="MySQL Schema to Golang Struct"
+        title="MySQL Structure to Golang Struct"
         extra={
           <Button type="primary" onClick={onConvert}>
             Convert
@@ -30,7 +30,7 @@ export default () => {
           <Col span={12}>
             <TextArea
               onChange={onChange}
-              placeholder="Input MySQL Schema"
+              placeholder="Input MySQL Create Table Syntax"
               autoSize={{ minRows: 20, maxRows: 20 }}
             />
           </Col>
