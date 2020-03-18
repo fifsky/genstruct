@@ -38,11 +38,7 @@ func main() {
 
 	db := gosql.Use("default")
 	gen := generator.NewGenerator(db)
-
-	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://go.fifsky.com","https://go.fifsky.com"},
-	})
-
+	c := cors.AllowAll()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
