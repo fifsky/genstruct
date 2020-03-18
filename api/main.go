@@ -40,7 +40,7 @@ func main() {
 	gen := generator.NewGenerator(db)
 
 	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://api.fifsky.com","https://api.fifsky.com"},
+		AllowedOrigins: []string{"http://go.fifsky.com","https://go.fifsky.com"},
 	})
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
