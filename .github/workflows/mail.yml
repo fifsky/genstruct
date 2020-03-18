@@ -28,7 +28,7 @@ jobs:
       - name: Build the Docker image
         run: |
           cd api
-          echo "${{secrets.DSN}}" > .env
+          echo "${{secrets.ENVFILE}}" > .env
 #          docker login --username=${{secrets.DOCKER_USERNAME}} --password=${{secrets.DOCKER_PASSWORD}} registry.cn-shanghai.aliyuncs.com
 #          docker build . --file Dockerfile --tag registry.cn-shanghai.aliyuncs.com/fifsky/gostruct
 #          docker push registry.cn-shanghai.aliyuncs.com/fifsky/gostruct
