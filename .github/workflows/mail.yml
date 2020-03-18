@@ -1,4 +1,4 @@
-name: blog
+name: build
 on: [push]
 jobs:
 
@@ -46,12 +46,12 @@ jobs:
             docker pull registry-vpc.cn-shanghai.aliyuncs.com/fifsky/gostruct
             docker run -d --name gostruct --restart always  --network fifsky --network-alias gostruct registry-vpc.cn-shanghai.aliyuncs.com/fifsky/gostruct
 
-        - name: Dingtalk message
-          uses: fifsky/dingtalk-action@master
-          with:
-            url: ${{ secrets.DINGTALK_WEBHOOK}}
-            type: markdown
-            content: |
-              ## Github Action
-              > genstruct deploy successful
-              > ^_^
+      - name: Dingtalk message
+        uses: fifsky/dingtalk-action@master
+        with:
+          url: ${{ secrets.DINGTALK_WEBHOOK}}
+          type: markdown
+          content: |
+            ## Github Action
+            > genstruct deploy successful
+            > ^_^
