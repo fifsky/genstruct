@@ -6,6 +6,7 @@ RUN apk update && \
 WORKDIR /app
 
 COPY ./app ./
+COPY .env ./
 
 ENV TZ=Asia/Shanghai
 EXPOSE 8989
