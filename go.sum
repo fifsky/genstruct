@@ -1,6 +1,8 @@
 github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
+github.com/goapt/dotenv v0.0.1 h1:gLCP/PAmwiexmKv+r2Ma2XeHTKZ3pg3DOqjCtOs6Hu8=
+github.com/goapt/dotenv v0.0.1/go.mod h1:E+eFec2nYn8NVJX7UFRUt90SS0u5rkLEnnew6cukWXI=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/ilibs/gosql/v2 v2.0.1 h1:tTryHWoo2z7wp2v7//+wv2rPlrWhEyMk5PAvR0j8P0w=
 github.com/ilibs/gosql/v2 v2.0.1/go.mod h1:YSNJ2DcVQSdCpHrPCNkdjRtUKLnECeXPcGhaz3rnE00=

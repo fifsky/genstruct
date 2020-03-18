@@ -20,11 +20,7 @@ import (
 )
 {{end}}
 type {{ .StructName }} struct {
-    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `db:"{{ .Field }}" json:"{{ .Field }}"{{ if ne $.OtherTag "" }} {{$.OtherTag}}:"{{ .Field }}"{{ end }}` + "\u0060 // {{.Comment}}{{ if ne $i $.Len }}\n    " + `{{ end }}{{ end }}
-}
-
-func ({{ .ShortName }} *{{ .StructName }}) DbName() string {
-    return "{{ .Database }}"
+    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `{{ range $j,$tag := $.OtherTags }} {{ $tag }}:"{{ $v.Field }}"{{ end }}` + "\u0060" + `{{ if ne .Comment "" }} // {{.Comment}}{{ end }}{{ if ne $i $.Len }}` + "\n" + `{{ end }}{{ end }}
 }
 
 func ({{ .ShortName }} *{{ .StructName }}) TableName() string {
@@ -46,7 +42,7 @@ type Attr struct {
 type TableInfo struct {
 	Columns    []*Attr
 	Len        int
-	OtherTag   string
+	OtherTags  []string
 	TableName  string
 	ShortName  string
 	StructName string
@@ -93,7 +89,7 @@ func (g *Generator) ShowTable(datas []map[string]interface{}, start time.Time) {
 	}
 }
 
-func (g *Generator) ShowStruct(table string, tag string) ([]byte, error) {
+func (g *Generator) ShowStruct(table string, tags []string) ([]byte, error) {
 	query := fmt.Sprintf("SHOW FULL COLUMNS FROM %s", table)
 	datas, err := g.Exec(query)
 	if err != nil {
@@ -108,7 +104,7 @@ func (g *Generator) ShowStruct(table string, tag string) ([]byte, error) {
 	}
 
 	info := &TableInfo{
-		OtherTag:   tag,
+		OtherTags:  tags,
 		Columns:    make([]*Attr, 0),
 		TableName:  table,
 		ShortName:  table[0:1],

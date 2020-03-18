@@ -82,8 +82,12 @@ func main() {
 				}
 
 				tag, _ := generator.GetParams(cmds, 2)
+				tags := strings.Split(tag, ",")
+				if len(tags) == 0 {
+					tags = []string{"db", "json"}
+				}
 
-				out, err := gen.ShowStruct(cmd, tag)
+				out, err := gen.ShowStruct(cmd, tags)
 				if err != nil {
 					return err
 				}
