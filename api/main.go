@@ -10,6 +10,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/goapt/dotenv"
 	"github.com/ilibs/gosql/v2"
+	"github.com/rs/cors"
 
 	"github.com/fifsky/genstruct/generator"
 )
@@ -38,7 +39,11 @@ func main() {
 	db := gosql.Use("default")
 	gen := generator.NewGenerator(db)
 
-	http.HandleFunc("/api/struct/gen", func(w http.ResponseWriter, r *http.Request) {
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://api.fifsky.com","https://api.fifsky.com"},
+	})
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			w.Write([]byte(fmt.Sprintf("request body read error \n%s", err)))
@@ -90,7 +95,9 @@ func main() {
 		w.Write(st)
 	})
 
-	err = http.ListenAndServe(":8989", nil)
+	http.Handle("/api/struct/gen", c.Handler(handler))
+
+	err = http.ListenAndServe(":8989",nil)
 
 	if err != nil {
 		log.Fatal("ListenAndServe", err)

@@ -8,4 +8,5 @@ require (
 	github.com/ilibs/gosql/v2 v2.0.2
 	github.com/mattn/go-runewidth v0.0.8 // indirect
 	github.com/olekukonko/tablewriter v0.0.4
+	github.com/rs/cors v1.7.0 // indirect
 )
