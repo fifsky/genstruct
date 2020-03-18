@@ -1,6 +1,10 @@
 import {fetch} from 'dva'
 import {Err} from './error'
 
+const getApiUrl = (url) => {
+  return process.env.NODE_ENV === 'production' ? 'https://api.fifsky.com' + url : url
+}
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -65,5 +69,5 @@ export const createApi = (url, body) => {
     headers,
   }
 
-  return request(url, param)
+  return request(getApiUrl(url), param)
 }
