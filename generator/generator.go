@@ -115,7 +115,7 @@ func (g *Generator) ShowStruct(table string, tags []string) ([]byte, error) {
 	var existTime = false
 	for _, v := range datas {
 		m := mapToString(v)
-		tp := typeFormat(m["Type"])
+		tp := typeFormat(m["Type"], m["Null"])
 
 		if tp == "time.Time" {
 			existTime = true
