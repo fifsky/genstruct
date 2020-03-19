@@ -55,17 +55,39 @@ func GetParams(cmds []string, i int) (string, error) {
 	return strings.TrimSpace(cmds[i]), nil
 }
 
-func typeFormat(t string) string {
-	if t == "datetime" || t == "date" {
+func typeFormat(t string, isNull string) string {
+	if t == "datetime" || t == "date" || t == "time" {
+		if isNull == "YES" {
+			return "sql.NullTime"
+		}
 		return "time.Time"
 	}
 
 	if len(t) >= 6 && t[0:6] == "bigint" {
+		if isNull == "YES" {
+			return "sql.NullInt64"
+		}
 		return "int64"
 	}
 
-	if strings.Index(t, "int") != -1 {
+	if strings.Index(t, "int") != -1 || strings.Index(t, "tinyint") != -1 {
+		if isNull == "YES" {
+			return "sql.NullInt64"
+		}
+
 		return "int"
+	}
+
+	if strings.Index(t, "decimal") != -1 || strings.Index(t, "float") != -1 || strings.Index(t, "double") != -1 {
+		if isNull == "YES" {
+			return "sql.NullFloat64"
+		}
+
+		return "float64"
+	}
+
+	if isNull == "YES" {
+		return "sql.NullString"
 	}
 
 	return "string"

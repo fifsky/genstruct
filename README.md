@@ -19,6 +19,10 @@ genstruct -h localhost -u root -p 3306 -P 123456
 * `-u` default `root`
 * `-p` default `3306`
 
+## online
+
+https://go.fifsky.com/
+
 ## gosql
 
 The structure can be applied to a [gosql](https://github.com/ilibs/gosql) package
