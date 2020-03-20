@@ -91,7 +91,7 @@ func main() {
 		w.Write(st)
 	})
 
-	http.Handle("/api/struct/gen", c.Handler(handler))
+	http.Handle("/genapi/struct/gen", c.Handler(handler))
 
 	err = http.ListenAndServe(":8989",nil)
 

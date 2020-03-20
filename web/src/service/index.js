@@ -1,3 +1,3 @@
 import {createApi} from "../util";
 
-export const genApi = data => createApi("/api/struct/gen", data);
+export const genApi = data => createApi("/genapi/struct/gen", data);

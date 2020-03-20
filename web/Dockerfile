@@ -1,3 +1,3 @@
-FROM abiosoft/caddy:latest
-COPY ./Caddyfile /etc/Caddyfile
-COPY ./dist/ /usr/share/caddy/
+FROM nginx:alpine
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./dist/ /usr/share/nginx/html/
