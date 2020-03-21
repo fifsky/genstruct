@@ -11,4 +11,4 @@ COPY .env ./
 ENV TZ=Asia/Shanghai
 EXPOSE 80
 
-ENTRYPOINT ["./app",":80"]
+ENTRYPOINT ["./app","--addr=:80"]
