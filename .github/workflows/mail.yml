@@ -19,12 +19,8 @@ jobs:
           node-version: '10.x'
 
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
-      - name: Get dependencies for Golang
-        run: |
-          cd api
-          go get -v -t -d ./...
       - name: Build Golang api
         run: |
           cd api
