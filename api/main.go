@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,6 +17,9 @@ import (
 )
 
 func main() {
+	port := flag.String("addr", ":8989", "addr ip:port")
+	flag.Parse()
+
 	m, err := dotenv.Read()
 
 	if err != nil {
@@ -93,7 +97,7 @@ func main() {
 
 	http.Handle("/genapi/struct/gen", c.Handler(handler))
 
-	err = http.ListenAndServe(":8989",nil)
+	err = http.ListenAndServe(*port, nil)
 
 	if err != nil {
 		log.Fatal("ListenAndServe", err)

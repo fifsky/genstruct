@@ -9,6 +9,6 @@ COPY ./app ./
 COPY .env ./
 
 ENV TZ=Asia/Shanghai
-EXPOSE 8989
+EXPOSE 80
 
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./app",":80"]
