@@ -20,7 +20,7 @@ import (
 )
 {{end}}
 type {{ .StructName }} struct {
-    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `{{ range $j,$tag := $.OtherTags }} {{ $tag }}:"{{ $v.Field }}"{{ end }}` + "\u0060" + `{{ if ne .Comment "" }} // {{.Comment}}{{ end }}{{ if ne $i $.Len }}` + "\n" + `{{ end }}{{ end }}
+    {{ range $i,$v := .Columns }}{{ .StructField }}    {{ .Type }}    ` + "\u0060" + `{{ range $j,$tag := $.OtherTags }}{{ $tag }}:"{{ $v.Field }}"{{ if ne $j $.Len }} {{ end }}{{ end }}` + "\u0060" + `{{ if ne .Comment "" }} // {{.Comment}}{{ end }}{{ if ne $i $.Len }}` + "\n" + `{{ end }}{{ end }}
 }
 
 func ({{ .ShortName }} *{{ .StructName }}) TableName() string {
@@ -43,6 +43,7 @@ type TableInfo struct {
 	Columns    []*Attr
 	Len        int
 	OtherTags  []string
+	TagLen     int
 	TableName  string
 	ShortName  string
 	StructName string
@@ -105,6 +106,7 @@ func (g *Generator) ShowStruct(table string, tags []string) ([]byte, error) {
 
 	info := &TableInfo{
 		OtherTags:  tags,
+		TagLen:     len(tags),
 		Columns:    make([]*Attr, 0),
 		TableName:  table,
 		ShortName:  table[0:1],
