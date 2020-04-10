@@ -67,7 +67,7 @@ func main() {
 			return
 		}
 
-		if !strings.Contains("create table",strings.ToLower(p.Table[0:20])) {
+		if !strings.Contains(strings.ToLower(p.Table[0:20]), "create table") {
 			w.Write([]byte(fmt.Sprintf("only support create table  syntax\n")))
 			return
 		}
