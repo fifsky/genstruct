@@ -62,7 +62,7 @@ func main() {
 			return
 		}
 
-		if len(p.Table) > 10000 {
+		if len(p.Table) > 10000 || len(p.Table) < 20 {
 			w.Write([]byte(fmt.Sprintf("content length must < 10000 byte\n")))
 			return
 		}
