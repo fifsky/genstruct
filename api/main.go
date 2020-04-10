@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/goapt/dotenv"
@@ -58,6 +59,16 @@ func main() {
 		err = json.Unmarshal(body, p)
 		if err != nil {
 			w.Write([]byte(fmt.Sprintf("request body json Unmarshal error \n%s", err)))
+			return
+		}
+
+		if len(p.Table) > 10000 {
+			w.Write([]byte(fmt.Sprintf("content length must < 10000 byte\n")))
+			return
+		}
+
+		if !strings.Contains("create table",strings.ToLower(p.Table)) {
+			w.Write([]byte(fmt.Sprintf("only support create table  syntax\n")))
 			return
 		}
 
