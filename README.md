@@ -1,4 +1,6 @@
 # genstruct
+![build](https://github.com/fifsky/genstruct/workflows/build/badge.svg)
+
 Golang struct generator similar to mysql terminal
 
 [![asciicast](https://asciinema.org/a/12i6QmbaUCQgPZ4o2rz5QmPVE.png)](https://asciinema.org/a/12i6QmbaUCQgPZ4o2rz5QmPVE)
