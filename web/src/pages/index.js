@@ -40,11 +40,9 @@ export default () => {
         }
       >
         <Row style={{marginBottom:'24px'}}>
-          <Col>
-            <Select mode="tags" style={{width: '100%'}} defaultValue={tags} placeholder="Tags" onChange={handleTags}>
-              {tags}
-            </Select>
-          </Col>
+          <Select mode="tags" style={{width: '100%'}} defaultValue={tags} placeholder="Tags" onChange={handleTags}>
+            {tags}
+          </Select>
         </Row>
         <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
           <Col span={12}>
